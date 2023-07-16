@@ -21,11 +21,14 @@ public class WeaponAssaultRifle : MonoBehaviour
     private AudioClip audioClipTakeWeapon; // 무기 장착 사운드
     [SerializeField]
     private AudioClip audioClipFire; // 공격 사운드
+    [SerializeField]
+    private AudioClip audioClipReload; // 재장전 사운드
 
     [Header("Weapon Setting")]
     [SerializeField]
     private WeaponSetting weaponSetting; // 무기 설정
     private float lastAttackTime = 0; // 마지막 발사시간 체크용
+    private bool isReload = false; // 재장전중인지 체크
 
     private AudioSource audioSource; // 사운드 재생 컴포넌트
     private PlayerAnimatorController animator; // 애니메이션 재생 제어
@@ -55,6 +58,9 @@ public class WeaponAssaultRifle : MonoBehaviour
     }
 
     public void StartWeaponAction(int type=0){
+        // 재장전 웅일때 무기 액션 불가
+        if (isReload) return;
+
         // 마우스 왼쪽 클릭(공격 시작)
         if(type == 0){
             //연속 공격
@@ -73,6 +79,16 @@ public class WeaponAssaultRifle : MonoBehaviour
         if(type == 0){
             StopCoroutine("OnAttackLoop");
         }
+    }
+
+    public void StartReload() {
+        // 현재 재장전 중이면 재장전 불가능
+        if (isReload) return;
+
+        // 무기 액션 도중 재장전 시도 -> 무기 액션 종료 후 재장전
+        StopWeaponAction();
+
+        StartCoroutine("OnReload");
     }
 
     public IEnumerator OnAttackLoop(){
@@ -120,6 +136,28 @@ public class WeaponAssaultRifle : MonoBehaviour
         muzzleFlashEffect.SetActive(false);
     }
 
+    private IEnumerator OnReload() {
+        isReload = true;
+
+        // 재장전 애니메이션, 사운드 재생
+        animator.OnReload();
+        PlaySound(audioClipReload);
+
+        while(true) {
+            // 사운드 재생중 아니고, 현재 애니메이션이 Movement이면
+            // 재장전 애니메이션, 사운드 종료되었다는 뜻
+            if (audioSource.isPlaying == false && animator.CurrentAnimationIs("Movement")) {
+                isReload = false;
+
+                // 현재 탄 수를 최대로 설정하고, 바뀐 탄 수 정보를 Text UI에 업데이트
+                weaponSetting.currentAmmo = weaponSetting.maxAmmo;
+                onAmmoEvent.Invoke(weaponSetting.currentAmmo, weaponSetting.maxAmmo);
+
+                yield break;
+            }
+            yield return null;
+        }
+    }
     private void PlaySound(AudioClip clip){
         audioSource.Stop(); // 기존에 재생중인 사운드를 정지하고,
         audioSource.clip = clip; // 새로운 사운드를 clip으로 교체 후
