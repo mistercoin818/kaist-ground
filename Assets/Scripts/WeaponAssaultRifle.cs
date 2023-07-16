@@ -84,6 +84,7 @@ public class WeaponAssaultRifle : MonoBehaviour
     public void StartReload() {
         // 현재 재장전 중이면 재장전 불가능
         if (isReload) return;
+        Debug.Log("startReload");
 
         // 무기 액션 도중 재장전 시도 -> 무기 액션 종료 후 재장전
         StopWeaponAction();
@@ -138,6 +139,7 @@ public class WeaponAssaultRifle : MonoBehaviour
 
     private IEnumerator OnReload() {
         isReload = true;
+        Debug.Log("OnReload");
 
         // 재장전 애니메이션, 사운드 재생
         animator.OnReload();
