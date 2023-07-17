@@ -7,6 +7,7 @@ public enum WeaponName {AssaultRifle = 0}
 public struct WeaponSetting
 {
     public WeaponName weaponName; // 무기 이름
+    public int damage; // 무기 공격력
     public int currentMagazine; // 현재 탄창 수
     public int maxMagazine; // 최대 탄창 수
     public int currentAmmo; // 현재 탄약 수
