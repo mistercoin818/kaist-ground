@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
-[System.Serializable]
-public class MagazineEvent : UnityEngine.Events.UnityEvent<int> { }
-public class WeaponAssaultRifle : MonoBehaviour
+public class WeaponAssaultRifle : WeaponBase
 {
-    [HideInInspector]
-    public AmmoEvent onAmmoEvent = new AmmoEvent();
-    [HideInInspector]
-    public MagazineEvent onMagazineEvent = new MagazineEvent();
+
     [Header("Fire Effects")]
     [SerializeField]
     private GameObject muzzleFlashEffect; // 총구 이펙트(On/Off)
@@ -30,26 +23,14 @@ public class WeaponAssaultRifle : MonoBehaviour
     [SerializeField]
     private AudioClip audioClipReload; // 재장전 사운드
 
-    [Header("Weapon Setting")]
-    [SerializeField]
-    private WeaponSetting weaponSetting; // 무기 설정
-    private float lastAttackTime = 0; // 마지막 발사시간 체크용
-    private bool isReload = false; // 재장전중인지 체크
-
-    private AudioSource audioSource; // 사운드 재생 컴포넌트
-    private PlayerAnimatorController animator; // 애니메이션 재생 제어
     private CasingMemoryPool casingMemoryPool; // 탄피 생성 후 활성/비활성 관리
     private ImpactMemoryPool impactMemoryPool; // 공격 효과 생성 후 활성/비활성 관리
     private Camera mainCamera; // 광선 발사
 
-    // 외부에서 필요한 정보를 열람하기 위해
-    public WeaponName WeaponName => weaponSetting.weaponName;
-    public int CurrentMagazine => weaponSetting.currentMagazine;
-    public int MaxMagazine => weaponSetting.maxMagazine;
-
     private void Awake(){
-        audioSource = GetComponent<AudioSource>();
-        animator = GetComponentInParent<PlayerAnimatorController>();
+        // 기반 클래스의 초기화를 위한 Setup() 메소드 호출
+        base.Setup();
+
         casingMemoryPool = GetComponent<CasingMemoryPool>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
         mainCamera = Camera.main;
@@ -76,7 +57,7 @@ public class WeaponAssaultRifle : MonoBehaviour
         onAmmoEvent.Invoke(weaponSetting.currentAmmo, weaponSetting.maxAmmo);
     }
 
-    public void StartWeaponAction(int type=0){
+    public override void StartWeaponAction(int type=0){
         // 재장전 웅일때 무기 액션 불가
         if (isReload) return;
 
@@ -93,14 +74,14 @@ public class WeaponAssaultRifle : MonoBehaviour
         } 
     }
 
-    public void StopWeaponAction(int type=0){
+    public override void StopWeaponAction(int type=0){
         // 마우스 왼쪽 클릭 (공격 종료)
         if(type == 0){
             StopCoroutine("OnAttackLoop");
         }
     }
 
-    public void StartReload() {
+    public override void StartReload() {
         // 현재 재장전 중이면 재장전 불가능
         if (isReload || weaponSetting.currentMagazine <= 0) return;
         Debug.Log("startReload");
@@ -186,11 +167,6 @@ public class WeaponAssaultRifle : MonoBehaviour
             yield return null;
         }
     }
-    private void PlaySound(AudioClip clip){
-        audioSource.Stop(); // 기존에 재생중인 사운드를 정지하고,
-        audioSource.clip = clip; // 새로운 사운드를 clip으로 교체 후
-        audioSource.Play(); // 사운드 재생
-    }
 
     private void TwoStepRaycast() {
         Ray ray;
@@ -218,7 +194,16 @@ public class WeaponAssaultRifle : MonoBehaviour
             if(hit.transform.CompareTag("ImpactEnemy")){
                 hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponSetting.damage);
             }
+            else if(hit.transform.CompareTag("InteractionObject")){
+                hit.transform.GetComponent<InteractionObject>().TakeDamage(weaponSetting.damage);
+            }
         }
         Debug.DrawRay(bulletSpawnPoint.position, attackDirection * weaponSetting.attackDistance, Color.blue);
+    }
+
+    public void IncreaseMagazine(int magazine){
+        weaponSetting.currentMagazine = CurrentMagazine + magazine > MaxMagazine ? MaxMagazine : CurrentMagazine + magazine;
+
+        onMagazineEvent.Invoke(CurrentMagazine);
     }
 }
