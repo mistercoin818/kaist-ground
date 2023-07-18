@@ -20,7 +20,10 @@ public class ItemMagazine : ItemBase
     }
 
     public override void Use(GameObject entity){
-        entity.GetComponentInChildren<WeaponAssaultRifle>().IncreaseMagazine(increaseMagazine);
+        // 소지중인 모든 무기의 탄창 수를 increaseMagazine 만큼 증가
+        // entity.GetComponent<WeaponSwitchSystem>().IncreaseMagazine(increaseMagazine);
+        // Main 무기(AssaultRifle)의 탄창 수를 increaseMagazine 만큼 증가
+        entity.GetComponent<WeaponSwitchSystem>().IncreaseMagazine(WeaponType.Main, increaseMagazine);
 
         Instantiate(magazineEffectPrefab, transform.position, Quaternion.identity);
 
