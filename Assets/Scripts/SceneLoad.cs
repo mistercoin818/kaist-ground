@@ -123,7 +123,7 @@ public class SceneLoad : MonoBehaviour
     }
 
     async void Connect() {
-        if (webSocket.State == WebSocketState.Open || webSocket.State == WebSocketState.Connecting) return;
+        if (webSocket != null) return;
         webSocket = new ClientWebSocket();
         Uri serverUri = new Uri("ws://172.10.5.95:80/");
 

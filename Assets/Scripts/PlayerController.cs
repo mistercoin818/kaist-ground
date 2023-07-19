@@ -30,6 +30,19 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        transform.position += new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+        GameObject socketManagerObject = GameObject.Find("SocketManager");
+        if (socketManagerObject != null)
+        {
+            sceneLoad = socketManagerObject.GetComponent<SceneLoad>();
+
+            if (sceneLoad != null)
+            {
+                sceneLoad.SendWebSocketMessage("position", JsonUtility.ToJson(new Position(transform.position, transform.rotation)));
+            }
+        }
+
+
         // 마우스 커서를 보이지 않게 설정하고, 현재 위치에 고정시킨다
         Cursor.visible		= false;
         Cursor.lockState	= CursorLockMode.Locked;
