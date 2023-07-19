@@ -29,7 +29,7 @@ public class Position {
     public float rz;
     public Position(Vector3 position, Quaternion rotation) {
         this.px = position.x;
-        this.py = position.y - 1.231097;
+        this.py = position.y - 1.231097f;
         this.pz = position.z;
         this.rx = rotation.eulerAngles.x;
         this.ry = rotation.eulerAngles.y;
@@ -165,7 +165,7 @@ public class SceneLoad : MonoBehaviour
                     }
                     if (res.data == "lose") {
                         Debug.Log("lose");
-                        SceneManager.LoadScene("GameOver");
+                        SceneManager.LoadScene("Lose");
                     }
                 }
                 if (res.type == "position") {

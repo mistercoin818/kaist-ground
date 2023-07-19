@@ -124,7 +124,7 @@ public class PlayerHUD : MonoBehaviour
 		}
 	}
 
-	private void UpdateHPHUD(int previous, int current)
+	public void UpdateHPHUD(int previous, int current)
 	{
 		textHP.text = "HP "+current;
 
@@ -138,7 +138,7 @@ public class PlayerHUD : MonoBehaviour
 		}
 	}
 
-	private IEnumerator OnBloodScreen()
+	public IEnumerator OnBloodScreen()
 	{
 		float percent = 0;
 

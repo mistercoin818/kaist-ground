@@ -13,6 +13,10 @@ public class OpponentManager : MonoBehaviour
     }
     public void UpdateMyHP(int hp) {
         // TODO : 여기서 화면에 총 맞는 빨간 효과
+        GameObject playerHUDObject = GameObject.Find("PlayerHUD");
+        PlayerHUD playerHUD = playerHUDObject.GetComponent<PlayerHUD>();
+        playerHUD.UpdateHPHUD(hp +1, hp);
+
         textMyHP.text = "Player\nHP " + hp.ToString();
     }
     public void UpdateOpHP(int hp) {
