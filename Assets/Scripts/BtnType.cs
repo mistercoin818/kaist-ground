@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public enum BTNType { New, Continue, Option, Sound, Back, Quit }
+public enum BTNType { New, Continue, Option, Sound, Back, Quit, Main }
 
 public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -73,6 +73,9 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 break;
             case BTNType.Quit:
                 QuitGame();
+                break;
+            case BTNType.Main:
+                SceneLoad.LoadSceneHandle("MainMenu", 0);
                 break;
         }
     }
