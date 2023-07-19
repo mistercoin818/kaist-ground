@@ -20,6 +20,8 @@ public class WeaponRevolver : WeaponBase
 	private	ImpactMemoryPool	impactMemoryPool;	// 공격 효과 생성 후 활성/비활성 관리
 	private	Camera				mainCamera;			// 광선 발사
 
+	private SceneLoad sceneLoad;
+
 	private void OnEnable()
 	{
 		// 총구 이펙트 오브젝트 비활성화
@@ -44,6 +46,8 @@ public class WeaponRevolver : WeaponBase
 		weaponSetting.currentMagazine	= weaponSetting.maxMagazine;
 		// 처음 탄 수는 최대로 설정
 		weaponSetting.currentAmmo		= weaponSetting.maxAmmo;
+		GameObject socketManagerObject = GameObject.Find("SocketManager");
+		sceneLoad = socketManagerObject.GetComponent<SceneLoad>();
 	}
 
 	public override void StartWeaponAction(int type = 0)
@@ -88,6 +92,9 @@ public class WeaponRevolver : WeaponBase
 			{
 				return;
 			}
+
+			sceneLoad.SendWebSocketMessage("shoot", "0");
+
 			// 공격시 currentAmmo 1 감소, 탄 수 UI 업데이트
 			weaponSetting.currentAmmo --;
 			onAmmoEvent.Invoke(weaponSetting.currentAmmo, weaponSetting.maxAmmo);

@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Start() {
-        // transform.position += new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+        transform.position += new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
         GameObject socketManagerObject = GameObject.Find("SocketManager");
         if (socketManagerObject != null)
         {
@@ -145,10 +145,6 @@ public class PlayerController : MonoBehaviour
             if (sceneLoad != null)
             {
                 sceneLoad.SendWebSocketMessage("position", JsonUtility.ToJson(new Position(transform.position, transform.rotation)));
-            }
-            else {
-                Debug.Log("sceneLoad is null");
-
             }
         }
     }
