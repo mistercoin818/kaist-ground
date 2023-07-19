@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
         if ( isDie == true )
         {
-            SceneManager.LoadScene("GameOver"); // GameOver 씬으로 전환
+            SceneManager.LoadScene("Lose"); // GameOver 씬으로 전환
             Debug.Log("GameOver");
         }
     }

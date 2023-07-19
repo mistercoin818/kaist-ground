@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public enum buttonType {Main, Quit}
@@ -21,12 +22,20 @@ public class GameoverBtn : MonoBehaviour
     void Start()
     {
         defaultScale = buttonScale.localScale;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    void Awake(){
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
     }
 
     public void OnBtnClick(){
         switch(current){
             case buttonType.Main:
-                SceneLoad.LoadSceneHandle("MainMenu", 0);
+                SceneManager.LoadScene("MainMenu");
                 break;
             case buttonType.Quit:
                 QuitGame();

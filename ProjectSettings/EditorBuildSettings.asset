@@ -10,12 +10,14 @@ EditorBuildSettings:
     guid: bb6c691302a2cee4e86efafbdfdc372e
   - enabled: 1
     path: Assets/Scenes/Play.unity
-    guid: b1eac795414a6a648ad27076de7d284c
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 4bfa36d31562b1d43a59721d992e37eb
   - enabled: 1
     path: Assets/Scenes/P2P.unity
     guid: d7df644fc81b86f4cb5a66197f73a6a3
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: 53a0ba2680043a043a5c03500157b082
   m_configObjects: {}
-  m_UseUCBPForAssetBundles: 0
