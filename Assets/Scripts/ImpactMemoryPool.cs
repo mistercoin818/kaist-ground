@@ -38,7 +38,7 @@ public class ImpactMemoryPool : MonoBehaviour
             // 상대방인데 그냥 캡슐 적이랑 똑같이 효과 주기 위함
             OnSpawnImpact(ImpactType.Enemy, hit.point, Quaternion.LookRotation(hit.normal));
             if (sceneLoad != null) {
-                sceneLoad.SendWebSocketMessage("shoot", "50");
+                sceneLoad.SendWebSocketMessage("shoot", "30");
             }
         }
     }
@@ -62,7 +62,7 @@ public class ImpactMemoryPool : MonoBehaviour
             // 상대방인데 그냥 캡슐 적이랑 똑같이 효과 주기 위함
             OnSpawnImpact(ImpactType.Enemy, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation));
             if (sceneLoad != null) {
-                sceneLoad.SendWebSocketMessage("shoot", "50");
+                sceneLoad.SendWebSocketMessage("shoot", "10");
             }
         }
     }

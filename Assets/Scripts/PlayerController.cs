@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private SceneLoad sceneLoad;
 
     private float lastSendTime;
-    private float sendRate = 0.5f; // 500ms마다 위치 전송
+    private float sendRate = 0.05f; // 50ms마다 위치 전송
 
     private void Awake()
     {

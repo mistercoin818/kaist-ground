@@ -43,7 +43,7 @@ public class SceneLoad : MonoBehaviour
 {
 
     public ClientWebSocket webSocket;
-
+    public Text textHP; 
     private Stage stage = Stage.None;
     public Slider progressbar;
     public TextMeshProUGUI loadtext;
@@ -146,13 +146,12 @@ public class SceneLoad : MonoBehaviour
 
             if (result.MessageType == WebSocketMessageType.Text) {
                 string message = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
-                Debug.Log("Received message: " + message);
 
                 // JSON을 Message 객체로 변환
                 Message res = JsonUtility.FromJson<Message>(message);
 
                 // 변환된 Message 객체 사용
-                Debug.Log("Received message - Type: " + res.type + ", Data: " + res.data);
+                if (res.type != "position") Debug.Log("Received message - Type: " + res.type + ", Data: " + res.data);
                 if (res.type == "info") {
                     if (res.data == "waiting") {
                         stage = Stage.Waiting;
@@ -160,12 +159,30 @@ public class SceneLoad : MonoBehaviour
                     if (res.data == "start") {
                         stage = Stage.Start;
                     }
+                    if (res.data == "win") {
+                        Debug.Log("win");
+                    }
+                    if (res.data == "lose") {
+                        Debug.Log("lose");
+                    }
                 }
                 if (res.type == "position") {
                     Position pos = JsonUtility.FromJson<Position>(res.data);
                     GameObject opponent = GameObject.Find("Opponent");
                     OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
                     opponentManager.UpdatePosition(pos);
+                }
+                if (res.type == "myHP") {
+                    int hp = int.Parse(res.data);
+                    GameObject opponent = GameObject.Find("Opponent");
+                    OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
+                    opponentManager.UpdateMyHP(hp);
+                }
+                if (res.type == "opHP") {
+                    int hp = int.Parse(res.data);
+                    GameObject opponent = GameObject.Find("Opponent");
+                    OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
+                    opponentManager.UpdateOpHP(hp);
                 }
             }
         }
