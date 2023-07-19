@@ -20,12 +20,29 @@ public class Message {
     }
 }
 
+public class Position {
+    public float px;
+    public float py;
+    public float pz;
+    public float rx;
+    public float ry;
+    public float rz;
+    public Position(Vector3 position, Quaternion rotation) {
+        this.px = position.x;
+        this.py = position.y;
+        this.pz = position.z;
+        this.rx = rotation.eulerAngles.x;
+        this.ry = rotation.eulerAngles.y;
+        this.rz = rotation.eulerAngles.z;
+    }
+}
+
 enum Stage { None, Connecting, Connected, InQueue, Waiting, Start }
 
 public class SceneLoad : MonoBehaviour
 {
 
-    private ClientWebSocket webSocket;
+    public ClientWebSocket webSocket;
 
     private Stage stage = Stage.None;
     public Slider progressbar;
@@ -73,9 +90,8 @@ public class SceneLoad : MonoBehaviour
                     else if (webSocket.State == WebSocketState.Open && stage == Stage.Connecting) {
                         stage = Stage.Connected;
                         loadtext.text = "Connected to Server";
-                        Debug.Log(JsonUtility.ToJson(new Message("info", "enqueue")));
                         stage = Stage.InQueue;
-                        SendWebSocketMessage(JsonUtility.ToJson(new Message("info", "enqueue")));
+                        SendWebSocketMessage("info", "enqueue");
                     }
                     else if (stage == Stage.Waiting) {
                         loadtext.text = "Waiting for Opponent";
@@ -93,7 +109,6 @@ public class SceneLoad : MonoBehaviour
                 operation.allowSceneActivation = true;
             }
         }
-        // yield return null;
     }
 
     // Start is called before the first frame update
@@ -146,6 +161,12 @@ public class SceneLoad : MonoBehaviour
                         stage = Stage.Start;
                     }
                 }
+                if (res.type == "position") {
+                    Position pos = JsonUtility.FromJson<Position>(res.data);
+                    GameObject opponent = GameObject.Find("Opponent");
+                    OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
+                    opponentManager.UpdatePosition(pos);
+                }
             }
         }
     }
@@ -159,11 +180,12 @@ public class SceneLoad : MonoBehaviour
     }
 
     // WebSocket으로 데이터를 보낼 때
-    async void SendWebSocketMessage(string message)
+    async public void SendWebSocketMessage(string type, string data)
     {
+        var json = JsonUtility.ToJson(new Message(type, data));
         if (webSocket != null && webSocket.State == WebSocketState.Open)
         {
-            byte[] sendBuffer = Encoding.UTF8.GetBytes(message);
+            byte[] sendBuffer = Encoding.UTF8.GetBytes(json);
             await webSocket.SendAsync(new ArraySegment<byte>(sendBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
         }
     }

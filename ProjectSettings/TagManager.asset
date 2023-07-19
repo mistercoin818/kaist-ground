@@ -21,6 +21,7 @@ TagManager:
   - ImpactEnemy
   - InteractionObject
   - Item
+  - Opponent
   layers:
   - Default
   - TransparentFX
