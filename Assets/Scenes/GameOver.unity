@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.15917587, g: 0.51232725, b: 0.6886792, a: 0.6666667}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.6666667}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &117010901
@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 1418501550}
   - component: {fileID: 1418501549}
   m_Layer: 5
-  m_Name: MainMenu
+  m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 1483418020}
   - component: {fileID: 1483418019}
   - component: {fileID: 1483418018}
-  - component: {fileID: 1483418017}
+  - component: {fileID: 1483418021}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -824,24 +824,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1483418017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483418015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f629796954a1cd49be66e4a938574c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentType: 1
-  buttonScale: {fileID: 117010899}
-  mainGroup: {fileID: 1418501549}
-  optionGroup: {fileID: 0}
-  soundButtonText: {fileID: 0}
-  hoverSound: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
 --- !u!114 &1483418018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,8 +868,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1483418017}
-        m_TargetAssemblyTypeName: BtnType, Assembly-CSharp
+      - m_Target: {fileID: 1483418021}
+        m_TargetAssemblyTypeName: GameoverBtn, Assembly-CSharp
         m_MethodName: OnBtnClick
         m_Mode: 1
         m_Arguments:
@@ -936,6 +918,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483418015}
   m_CullTransparentMesh: 1
+--- !u!114 &1483418021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483418015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9245be8de915e2e4c86539b6d17ca643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: 0
+  buttonScale: {fileID: 117010899}
+  mainGroup: {fileID: 1418501549}
+  hoverSound: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
 --- !u!1 &1504944574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1083,7 @@ GameObject:
   - component: {fileID: 1704641228}
   - component: {fileID: 1704641227}
   m_Layer: 5
-  m_Name: OptionBtn
+  m_Name: QuitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1124,7 +1122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.15917587, g: 0.51232725, b: 0.6886792, a: 0.6666667}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1704641228
@@ -1176,8 +1174,8 @@ GameObject:
   - component: {fileID: 1769400160}
   - component: {fileID: 1769400164}
   - component: {fileID: 1769400163}
+  - component: {fileID: 1769400165}
   - component: {fileID: 1769400162}
-  - component: {fileID: 1769400161}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1206,24 +1204,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1769400161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769400159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f629796954a1cd49be66e4a938574c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentType: 2
-  buttonScale: {fileID: 1704641226}
-  mainGroup: {fileID: 1418501549}
-  optionGroup: {fileID: 0}
-  soundButtonText: {fileID: 0}
-  hoverSound: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
 --- !u!114 &1769400162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,8 +1248,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1769400161}
-        m_TargetAssemblyTypeName: BtnType, Assembly-CSharp
+      - m_Target: {fileID: 1769400165}
+        m_TargetAssemblyTypeName: GameoverBtn, Assembly-CSharp
         m_MethodName: OnBtnClick
         m_Mode: 1
         m_Arguments:
@@ -1318,6 +1298,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769400159}
   m_CullTransparentMesh: 1
+--- !u!114 &1769400165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769400159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9245be8de915e2e4c86539b6d17ca643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: 1
+  buttonScale: {fileID: 1704641226}
+  mainGroup: {fileID: 1418501549}
+  hoverSound: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
 --- !u!1 &2059628366
 GameObject:
   m_ObjectHideFlags: 0
