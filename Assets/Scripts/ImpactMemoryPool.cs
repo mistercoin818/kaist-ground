@@ -35,7 +35,11 @@ public class ImpactMemoryPool : MonoBehaviour
             OnSpawnImpact(ImpactType.InteractionObject, hit.point, Quaternion.LookRotation(hit.normal), color);
         }
         else if (hit.transform.CompareTag("Opponent")) {
-            OnSpawnImpact(ImpactType.Opponent, hit.point, Quaternion.LookRotation(hit.normal));
+            // 상대방인데 그냥 캡슐 적이랑 똑같이 효과 주기 위함
+            OnSpawnImpact(ImpactType.Enemy, hit.point, Quaternion.LookRotation(hit.normal));
+            if (sceneLoad != null) {
+                sceneLoad.SendWebSocketMessage("shoot", "50");
+            }
         }
     }
 
@@ -54,9 +58,9 @@ public class ImpactMemoryPool : MonoBehaviour
             Color color = other.transform.GetComponentInChildren<MeshRenderer>().material.color;
             OnSpawnImpact(ImpactType.InteractionObject, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation), color);
         }
-        else if (other.CompareTag("ImpactOpponent")) {
-            OnSpawnImpact(ImpactType.Opponent, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation));
-
+        else if (other.CompareTag("Opponent")) {
+            // 상대방인데 그냥 캡슐 적이랑 똑같이 효과 주기 위함
+            OnSpawnImpact(ImpactType.Enemy, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation));
             if (sceneLoad != null) {
                 sceneLoad.SendWebSocketMessage("shoot", "50");
             }
