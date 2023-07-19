@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -131,6 +132,7 @@ public class PlayerController : MonoBehaviour
 
 		if ( isDie == true )
 		{
+            SceneManager.LoadScene("GameOver"); // GameOver 씬으로 전환
 			Debug.Log("GameOver");
 		}
 	}
