@@ -7,29 +7,45 @@ using System.Text;
 
 public class WebSocketExample : MonoBehaviour
 {
-    private ClientWebSocket webSocket;
+     private ClientWebSocket webSocket;
 
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
 
-    async void Start()
-    {
+    async void Connect() {
         webSocket = new ClientWebSocket();
         Uri serverUri = new Uri("ws://172.10.5.95:80/");
 
-        try
-        {
+        try {
             await webSocket.ConnectAsync(serverUri, CancellationToken.None);
             Debug.Log("Connected to server");
 
             // WebSocket으로부터 데이터를 수신하는 루프 시작
             ReceiveLoop();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Debug.LogError("WebSocket connection error: " + e.Message);
         }
+        return;
+    }
+
+    async void Start()
+    {
+        // webSocket = new ClientWebSocket();
+        // Uri serverUri = new Uri("ws://172.10.5.95:80/");
+
+        // try
+        // {
+        //     await webSocket.ConnectAsync(serverUri, CancellationToken.None);
+        //     Debug.Log("Connected to server");
+
+        //     // WebSocket으로부터 데이터를 수신하는 루프 시작
+        //     ReceiveLoop();
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.LogError("WebSocket connection error: " + e.Message);
+        // }
     }
 
     async void ReceiveLoop()

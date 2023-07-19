@@ -19,11 +19,11 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnBtnClick() {
         switch (currentType) {
-        case BTNType.New:
+        case BTNType.New: // 연습모드
             SceneLoad.LoadSceneHandle("Play", 0);
             break;
-        case BTNType.Continue:
-            SceneLoad.LoadSceneHandle("Play", 1);
+        case BTNType.Continue: // 대결모드
+            SceneLoad.LoadSceneHandle("P2P", 0);
             break;
         case BTNType.Option:
             CanvasGroupOff(mainGroup);
@@ -37,6 +37,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             CanvasGroupOn(mainGroup);
             break;
         case BTNType.Quit:
+            Debug.Log("Quit Game");
             Application.Quit();
             break;
         }
