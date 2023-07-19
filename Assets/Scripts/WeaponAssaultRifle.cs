@@ -33,7 +33,7 @@ public class WeaponAssaultRifle : WeaponBase
 	private	CasingMemoryPool			casingMemoryPool;			// 탄피 생성 후 활성/비활성 관리
 	private	ImpactMemoryPool			impactMemoryPool;			// 공격 효과 생성 후 활성/비활성 관리
 	private	Camera						mainCamera;					// 광선 발사
-
+	public SceneLoad sceneLoad;
 	private void Awake()
 	{
 		// 기반 클래스의 초기화를 위한 Setup() 메소드 호출
@@ -47,6 +47,9 @@ public class WeaponAssaultRifle : WeaponBase
 		weaponSetting.currentMagazine	= weaponSetting.maxMagazine;
 		// 처음 탄 수는 최대로 설정
 		weaponSetting.currentAmmo		= weaponSetting.maxAmmo;
+
+			GameObject socketManagerObject = GameObject.Find("SocketManager");
+			sceneLoad = socketManagerObject.GetComponent<SceneLoad>();
 	}
 
 	private void OnEnable()
@@ -146,6 +149,8 @@ public class WeaponAssaultRifle : WeaponBase
 			{
 				return;
 			}
+			
+			sceneLoad.SendWebSocketMessage("shoot", "0");
 			// 공격시 currentAmmo 1 감소, 탄 수 UI 업데이트
 			weaponSetting.currentAmmo --;
 			onAmmoEvent.Invoke(weaponSetting.currentAmmo, weaponSetting.maxAmmo);

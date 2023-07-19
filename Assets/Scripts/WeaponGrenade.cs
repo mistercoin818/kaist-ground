@@ -12,6 +12,7 @@ public class WeaponGrenade : WeaponBase
 	private	GameObject			grenadePrefab;		// 수류탄 프리팹
 	[SerializeField]
 	private	Transform			grenadeSpawnPoint;	// 수류탄 생성 위치
+	private SceneLoad sceneLoad;
 
 	private void OnEnable()
 	{
@@ -29,6 +30,8 @@ public class WeaponGrenade : WeaponBase
 		weaponSetting.currentMagazine	= weaponSetting.maxMagazine;
 		// 처음 탄 수는 최대로 설정
 		weaponSetting.currentAmmo		= weaponSetting.maxAmmo;
+		GameObject socketManagerObject = GameObject.Find("SocketManager");
+		sceneLoad = socketManagerObject.GetComponent<SceneLoad>();
 	}
 
 	public override void StartWeaponAction(int type = 0)
@@ -55,6 +58,7 @@ public class WeaponGrenade : WeaponBase
 		animator.Play("Fire", -1, 0);
 		// 공격 사운드 재생
 		PlaySound(audioClipFire);
+		sceneLoad.SendWebSocketMessage("shoot", "0");
 
 		yield return new WaitForEndOfFrame();
 

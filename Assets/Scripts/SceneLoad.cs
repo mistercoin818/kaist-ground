@@ -29,7 +29,7 @@ public class Position {
     public float rz;
     public Position(Vector3 position, Quaternion rotation) {
         this.px = position.x;
-        this.py = position.y;
+        this.py = position.y - 1.231097;
         this.pz = position.z;
         this.rx = rotation.eulerAngles.x;
         this.ry = rotation.eulerAngles.y;
@@ -161,9 +161,11 @@ public class SceneLoad : MonoBehaviour
                     }
                     if (res.data == "win") {
                         Debug.Log("win");
+                        SceneManager.LoadScene("Win");
                     }
                     if (res.data == "lose") {
                         Debug.Log("lose");
+                        SceneManager.LoadScene("GameOver");
                     }
                 }
                 if (res.type == "position") {
@@ -171,6 +173,9 @@ public class SceneLoad : MonoBehaviour
                     GameObject opponent = GameObject.Find("Opponent");
                     OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
                     opponentManager.UpdatePosition(pos);
+                }
+                if (res.type == "shoot") {
+                    // TODO : 총 소리
                 }
                 if (res.type == "myHP") {
                     int hp = int.Parse(res.data);
