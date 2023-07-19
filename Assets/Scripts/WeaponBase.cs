@@ -18,7 +18,7 @@ public abstract class WeaponBase : MonoBehaviour
 	protected	float						lastAttackTime = 0;			// 마지막 발사시간 체크용
 	protected	bool						isReload = false;			// 재장전 중인지 체크
 	protected	bool						isAttack = false;			// 공격 여부 체크용
-	protected	AudioSource					audioSource;				// 사운드 재생 컴포넌트
+	public   	AudioSource					audioSource;				// 사운드 재생 컴포넌트
 	protected	PlayerAnimatorController	animator;					// 애니메이션 재생 제어
 
 	// 외부에서 이벤트 함수 등록을 할 수 있도록 public 선언
@@ -37,7 +37,7 @@ public abstract class WeaponBase : MonoBehaviour
 	public abstract void StopWeaponAction(int type=0);
 	public abstract void StartReload();
 
-	protected void PlaySound(AudioClip clip)
+	public void PlaySound(AudioClip clip)
 	{
 		audioSource.Stop();			// 기존에 재생중인 사운드를 정지하고,
 		audioSource.clip = clip;	// 새로운 사운드 clip으로 교체 후
