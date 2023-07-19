@@ -11,6 +11,7 @@ public class BackBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Vector3 defaultScale;
 
     public void Back() {
+        Debug.Log("Back");
         SceneManager.LoadScene("MainMenu");
     }
 

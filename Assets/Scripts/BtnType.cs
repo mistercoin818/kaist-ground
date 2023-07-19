@@ -26,31 +26,29 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         audioSource = GameObject.FindWithTag("MainCamera").GetComponent<AudioSource>();
     }
 
-    public void OnBtnClick()
-    {
-        switch (currentType)
-        {
-            case BTNType.New:
-                SceneLoad.LoadSceneHandle("Play", 0);
-                break;
-            case BTNType.Continue:
-                SceneLoad.LoadSceneHandle("Play", 1);
-                break;
-            case BTNType.Option:
-                CanvasGroupOff(mainGroup);
-                CanvasGroupOn(optionGroup);
-                break;
-            case BTNType.Sound:
-                isSoundOn = !isSoundOn;
-                audioSource.enabled = isSoundOn;
-                break;
-            case BTNType.Back:
-                CanvasGroupOff(optionGroup);
-                CanvasGroupOn(mainGroup);
-                break;
-            case BTNType.Quit:
-                QuitGame();
-                break;
+    public void OnBtnClick() {
+        switch (currentType) {
+        case BTNType.New:
+            SceneLoad.LoadSceneHandle("Play", 0);
+            break;
+        case BTNType.Continue:
+            SceneLoad.LoadSceneHandle("P2P", 0);
+            break;
+        case BTNType.Option:
+            CanvasGroupOff(mainGroup);
+            CanvasGroupOn(optionGroup);
+            break;
+        case BTNType.Sound:
+            isSoundOn = !isSoundOn;
+            audioSource.enabled = isSoundOn;
+            break;
+        case BTNType.Back:
+            CanvasGroupOff(optionGroup);
+            CanvasGroupOn(mainGroup);
+            break;
+        case BTNType.Quit:
+            QuitGame();
+            break;
         }
     }
 
