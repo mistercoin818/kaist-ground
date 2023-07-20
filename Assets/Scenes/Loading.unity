@@ -290,8 +290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5b3356d6ab08f41ad36a93d20297b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textHP: {fileID: 0}
   progressbar: {fileID: 972772376}
   loadtext: {fileID: 1876224449}
+  hoverSound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
 --- !u!1 &745379118
 GameObject:
   m_ObjectHideFlags: 0

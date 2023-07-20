@@ -49,6 +49,8 @@ public class SceneLoad : MonoBehaviour
     public TextMeshProUGUI loadtext;
     private static string loadScene;
     private static int loadType;
+    AudioSource audioSource;
+    public AudioClip hoverSound;
 
     public static void LoadSceneHandle(string _name, int _loadType) {
         loadScene = _name;
@@ -115,6 +117,7 @@ public class SceneLoad : MonoBehaviour
     void Start()
     {
         StartCoroutine(LoadScene());
+        audioSource = GameObject.FindWithTag("MainCamera").GetComponent<AudioSource>();
     }
 
 
@@ -175,9 +178,13 @@ public class SceneLoad : MonoBehaviour
                     OpponentManager opponentManager = opponent.GetComponent<OpponentManager>();
                     opponentManager.UpdatePosition(pos);
                 }
-                if (res.type == "shoot") {
-                    // TODO : 총 소리
-                }
+                // if (res.type == "shot") {
+                //     // TODO : 총 소리
+                //     if (hoverSound != null)
+                //     {
+                //         audioSource.PlayOneShot(hoverSound);
+                //     }
+                // }
                 if (res.type == "myHP") {
                     int hp = int.Parse(res.data);
                     GameObject opponent = GameObject.Find("Opponent");
